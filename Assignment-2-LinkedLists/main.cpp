@@ -2,6 +2,7 @@
 #include <utility>
 #include <vector>
 #include <map>
+#include <string>
 // A simple phonebook created in C++ using Linked Lists
 
 // -- Entry Object, inserts into linked list
@@ -65,22 +66,30 @@ public:
         Entry* current = head;
         int count = 1;
         while(current->next != nullptr) {
-            if (index == count) { break; }
+            if (index <= count) { break; }
             count++;
 
             current = current->next;
         }
         if (count < index) { throw std::out_of_range("DELETE ENTRY FAILED: Index Out of Bounds"); }
 
-        Entry* temp = current->next;
-        current->next = current->next->next;
-        delete temp;
+        // Delete head or other value
+        if (count > index) {
+            Entry* temp = head;
+            head = temp->next;
+            delete temp;
+        } else {
+            Entry* temp = current->next;
+            current->next = temp->next;
+            delete temp;
+        }
+
 
     }
     // - Returns entry at given index
     Entry* get_entry(int index) {
         Entry* current = head;
-        int count = 1;
+        int count = 0;
         while(current->next != nullptr) {
             if (index == count) { break; }
             count++;
@@ -110,7 +119,7 @@ public:
     // - Returns index of given entry
     int index_of(Entry* entry) {
         Entry* current = head;
-        int count = 1;
+        int count = 0;
         bool found = false;
         while(current->next != nullptr) {
             if (entry == current) {
@@ -156,9 +165,7 @@ std::ostream& operator<<(std::ostream& os, const Entry& entry) {
 std::string get_user_input(const std::string& prompt) {
     std::cout << prompt;
     std::string user_input;
-    std::cin >> user_input;
-    std::cin.ignore();
-
+    std::getline(std::cin, user_input);
     return user_input;
 }
 
@@ -219,7 +226,10 @@ int main(){
                     entry = phonebook.get_entry(user_entry, get_user_input("Value to Search For: "));
                 }
 
-                entry->set(get_user_input("Info to Modify: "), get_user_input("New Value: "));
+                // get inputs are definined in their own lines to ensure they're called in the correct order
+                std::string info = get_user_input("Info to Modify: ");
+                std::string new_value = get_user_input("New Value: ");
+                entry->set(info, new_value );
 
                 std::cout << "ENTRY UPDATED" << std::endl;
 
@@ -230,7 +240,8 @@ int main(){
                 std::string user_entry = get_user_input("Search for an entry by Number or Info \n "
                                                         "Valid Info: [first_name], [last_name], [street_address], [city], [phone_number]\n "
                                                         "Valid Numbers: Between [0] and [" +
-                                                        std::to_string(phonebook.list().size()) + "]");
+                                                        std::to_string(phonebook.list().size()) + "]"
+                                                      "\n>");
                 Entry *entry;
                 if (isdigit(user_entry[0])) {
                     entry = phonebook.get_entry(stoi(user_entry));
