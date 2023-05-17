@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <ctime>
 #include <vector>
 
 
@@ -24,10 +25,19 @@ private:
 
     std::vector<std::vector<char>> grid;
 
-    char get_random_letter();
-    int get_random_sign();
+    // Placement data type. Contains all info needed to place a word (x pos, y pos, x direction, y direction, score being number of letters it intersects)
+    struct Placement {
+        int x, y, dx, dy;
 
-    bool is_in_range(int value, int min, int max);
+        Placement(int, int, int, int);
+    };
+
+    static char get_random_letter() ;
+
+    void place_word(std::string word);
+    int place_next_letter(std::string, int, int, Placement);
+
+    bool is_in_range(int, int, int);
 };
 
 

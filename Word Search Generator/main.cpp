@@ -2,7 +2,7 @@
 #include "WordSearch.h"
 
 int main() {
-    WordSearch ws = WordSearch({"Carl", "Alien", "Nolan", "Ignoramus", "Champion", "Alfred"});
+    WordSearch ws = WordSearch({"Exciting", "Engine", "Int", "Xylophone", "Yak", "Gorp", "Nihilistic", "Chips"});
     std::cout << ws;
 
     return 0;
