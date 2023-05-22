@@ -27,13 +27,13 @@ private:
 
     // Placement data type. Contains all info needed to place a word (x pos, y pos, x direction, y direction, score being number of letters it intersects)
     struct Placement {
-        int x, y, dx, dy;
+        int x, y, dx, dy, score;
 
-        Placement(int, int, int, int);
+        Placement(int, int, int, int, int);
     };
 
     static char get_random_letter() ;
-
+    //std::vector<Placement> place_next_word(const std::vector<std::string>&, int, std::vector<Placement>);
     void place_word(std::string word);
     int place_next_letter(std::string, int, int, Placement);
 
