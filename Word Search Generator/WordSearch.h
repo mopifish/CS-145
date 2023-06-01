@@ -34,7 +34,7 @@ private:
 
     static char get_random_letter() ;
 
-    void place_word(std::string word);
+    void place_word(std::string);
     int place_next_letter(std::string, int, int, Placement);
 
     bool is_in_range(int, int, int);

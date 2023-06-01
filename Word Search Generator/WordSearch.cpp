@@ -26,7 +26,6 @@ std::ostream& operator<<(std::ostream& os, const WordSearch& ws) {
 char WordSearch::get_random_letter() {
     return 'a' + rand()%26;
 }
-
 // Recursive wrapper
 void WordSearch::place_word(std::string word){
     Placement best_placement = Placement(0, 0, 0, 0);
@@ -59,7 +58,6 @@ void WordSearch::place_word(std::string word){
         // Instead places word in random position
         do {
             best_placement = Placement(rand()%SIZE, rand()%SIZE, rand()%3-1, rand()%3-1);
-
         } while (place_next_letter(word, 0, 0, best_placement) == -1);
     }
 
@@ -95,7 +93,6 @@ int WordSearch::place_next_letter(std::string word, int i, int score, Placement 
 bool WordSearch::is_in_range(int value, int min, int max) {
     return value <= max && value >= min;
 }
-
 
 WordSearch::Placement::Placement(int x, int y, int dx, int dy) {
     this->x = x;
